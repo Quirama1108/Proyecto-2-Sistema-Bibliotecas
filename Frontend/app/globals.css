@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f8f6f1;
+  --foreground: #1c1917;
+  --surface: #ffffff;
+  --primary: #b45309;
+  --primary-dark: #92400e;
+}
+
+.dark {
+  --background: #0c0a09;
+  --foreground: #fafaf9;
+  --surface: #1c1917;
+  --primary: #f59e0b;
+  --primary-dark: #d97706;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, sans-serif;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgb(251 191 36 / 0.08), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgb(120 113 108 / 0.08), transparent 30%);
+}
+
+.dark body {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgb(245 158 11 / 0.06), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgb(68 64 60 / 0.4), transparent 30%);
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease-out both;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+* {
+  box-sizing: border-box;
+}
