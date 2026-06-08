@@ -16,8 +16,8 @@ const displayFont = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Sistema de Gestion de Biblioteca",
-  description: "Administracion de libros, movimientos y usuarios"
+  title: "Sistema de Gestión de Biblioteca",
+  description: "Administración de libros, movimientos y usuarios"
 };
 
 export default function RootLayout({

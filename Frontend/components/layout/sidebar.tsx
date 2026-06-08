@@ -70,7 +70,7 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
             </div>
             <div>
               <p className="font-display text-base font-semibold text-white">Biblioteca</p>
-              <p className="text-xs text-stone-400">Sistema de gestion</p>
+              <p className="text-xs text-stone-400">Sistema de gestión</p>
             </div>
           </div>
           <Button
@@ -142,7 +142,7 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
             className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-stone-300 transition hover:bg-stone-800 hover:text-white"
           >
             <LogOut className="h-4 w-4 shrink-0" />
-            Cerrar sesion
+            Cerrar sesión
           </button>
         </div>
       </aside>

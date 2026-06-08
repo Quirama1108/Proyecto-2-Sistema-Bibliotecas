@@ -27,7 +27,7 @@ export function AuthGuard({ children, requireAdmin = false }: AuthGuardProps) {
   }, [isLoading, isAuthenticated, requireAdmin, user, router, pathname]);
 
   if (isLoading) {
-    return <LoadingState label="Verificando sesion..." />;
+    return <LoadingState label="Verificando sesión..." />;
   }
 
   if (!isAuthenticated) return null;

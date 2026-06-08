@@ -39,14 +39,14 @@ export function RegisterForm() {
         minLength={2}
       />
       <Input
-        label="Correo electronico"
+        label="Correo electrónico"
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
       />
       <Input
-        label="Contrasena"
+        label="Contraseña"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}

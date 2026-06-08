@@ -45,6 +45,15 @@ async function loginAsAdmin() {
   });
 }
 
+async function deleteBook(token: string, bookId: string) {
+  await request<{ book: { id: string } }>(`/api/books/${bookId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+}
+
 test("login returns an admin JWT", async () => {
   const login = await loginAsAdmin();
 
@@ -56,102 +65,122 @@ test("login returns an admin JWT", async () => {
 test("books endpoint supports pagination and admin can create a book", async () => {
   const login = await loginAsAdmin();
   const suffix = Date.now();
-  const created = await request<{
-    book: {
-      id: string;
-      name: string;
-      stock: number;
-    };
-  }>("/api/books", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${login.token}`
-    },
-    body: JSON.stringify({
-      name: `Libro prueba ${suffix}`,
-      author: "Test Runner",
-      isbn: `TEST-${suffix}`,
-      description: "Libro temporal creado por pruebas automatizadas.",
-      initialStock: 2
-    })
-  });
-  const books = await request<{
-    books: Array<{ id: string; name: string }>;
-    pagination: {
-      page: number;
-      pageSize: number;
-      total: number;
-      totalPages: number;
-    };
-  }>("/api/books?page=1&pageSize=5", {
-    headers: {
-      Authorization: `Bearer ${login.token}`
-    }
-  });
+  let createdBookId: string | undefined;
 
-  assert.equal(created.book.stock, 2);
-  assert.equal(books.pagination.page, 1);
-  assert.equal(books.pagination.pageSize, 5);
-  assert.ok(books.pagination.total >= 1);
-  assert.ok(books.books.length <= 5);
+  try {
+    const created = await request<{
+      book: {
+        id: string;
+        name: string;
+        stock: number;
+      };
+    }>("/api/books", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${login.token}`
+      },
+      body: JSON.stringify({
+        name: `Libro prueba ${suffix}`,
+        author: "Test Runner",
+        isbn: `TEST-${suffix}`,
+        description: "Libro temporal creado por pruebas automatizadas.",
+        initialStock: 2
+      })
+    });
+    createdBookId = created.book.id;
+
+    const books = await request<{
+      books: Array<{ id: string; name: string }>;
+      pagination: {
+        page: number;
+        pageSize: number;
+        total: number;
+        totalPages: number;
+      };
+    }>("/api/books?page=1&pageSize=5", {
+      headers: {
+        Authorization: `Bearer ${login.token}`
+      }
+    });
+
+    assert.equal(created.book.stock, 2);
+    assert.equal(books.pagination.page, 1);
+    assert.equal(books.pagination.pageSize, 5);
+    assert.ok(books.pagination.total >= 1);
+    assert.ok(books.books.length <= 5);
+  } finally {
+    if (createdBookId) {
+      await deleteBook(login.token, createdBookId);
+    }
+  }
 });
 
 test("movements endpoint creates and lists inventory movements", async () => {
   const login = await loginAsAdmin();
   const suffix = Date.now();
-  const created = await request<{
-    book: {
-      id: string;
-      stock: number;
-    };
-  }>("/api/books", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${login.token}`
-    },
-    body: JSON.stringify({
-      name: `Libro movimientos ${suffix}`,
-      author: "Test Runner",
-      isbn: `MOVE-${suffix}`,
-      initialStock: 1
-    })
-  });
-  const movement = await request<{
-    movement: {
-      id: string;
-      type: "ENTRADA" | "SALIDA";
-      quantity: number;
-      resultingStock: number;
-    };
-    book: {
-      id: string;
-      stock: number;
-    };
-  }>("/api/movements", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${login.token}`
-    },
-    body: JSON.stringify({
-      bookId: created.book.id,
-      type: "SALIDA",
-      quantity: 1,
-      note: "Salida creada por prueba automatizada."
-    })
-  });
-  const movements = await request<{
-    movements: Array<{ id: string; type: string }>;
-    pagination: {
-      total: number;
-    };
-  }>(`/api/movements?bookId=${created.book.id}&page=1&pageSize=10`, {
-    headers: {
-      Authorization: `Bearer ${login.token}`
-    }
-  });
+  let createdBookId: string | undefined;
 
-  assert.equal(movement.movement.type, "SALIDA");
-  assert.equal(movement.book.stock, 0);
-  assert.ok(movements.pagination.total >= 2);
-  assert.ok(movements.movements.some((item) => item.id === movement.movement.id));
+  try {
+    const created = await request<{
+      book: {
+        id: string;
+        stock: number;
+      };
+    }>("/api/books", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${login.token}`
+      },
+      body: JSON.stringify({
+        name: `Libro movimientos ${suffix}`,
+        author: "Test Runner",
+        isbn: `MOVE-${suffix}`,
+        initialStock: 1
+      })
+    });
+    createdBookId = created.book.id;
+
+    const movement = await request<{
+      movement: {
+        id: string;
+        type: "ENTRADA" | "SALIDA";
+        quantity: number;
+        resultingStock: number;
+      };
+      book: {
+        id: string;
+        stock: number;
+      };
+    }>("/api/movements", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${login.token}`
+      },
+      body: JSON.stringify({
+        bookId: created.book.id,
+        type: "SALIDA",
+        quantity: 1,
+        note: "Salida creada por prueba automatizada."
+      })
+    });
+    const movements = await request<{
+      movements: Array<{ id: string; type: string }>;
+      pagination: {
+        total: number;
+      };
+    }>(`/api/movements?bookId=${created.book.id}&page=1&pageSize=10`, {
+      headers: {
+        Authorization: `Bearer ${login.token}`
+      }
+    });
+
+    assert.equal(movement.movement.type, "SALIDA");
+    assert.equal(movement.book.stock, 0);
+    assert.ok(movements.pagination.total >= 2);
+    assert.ok(movements.movements.some((item) => item.id === movement.movement.id));
+  } finally {
+    if (createdBookId) {
+      await deleteBook(login.token, createdBookId);
+    }
+  }
 });

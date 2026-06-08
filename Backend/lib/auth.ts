@@ -64,7 +64,7 @@ export async function requireAdmin(request: NextRequest) {
   const user = await requireUser(request);
 
   if (user.role !== "ADMIN") {
-    throw new ApiError(403, "Esta accion requiere rol ADMIN");
+    throw new ApiError(403, "Esta acción requiere rol ADMIN");
   }
 
   return user;

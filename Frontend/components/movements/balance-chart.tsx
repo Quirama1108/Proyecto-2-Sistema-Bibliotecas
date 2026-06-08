@@ -25,8 +25,8 @@ export function BalanceChart({ points, bookName }: BalanceChartProps) {
     return (
       <EmptyState
         icon={LineChartIcon}
-        title="Sin datos para la grafica"
-        description="Registra movimientos para ver la evolucion del saldo."
+        title="Sin datos para la gráfica"
+        description="Registra movimientos para ver la evolución del saldo."
       />
     );
   }
@@ -40,7 +40,7 @@ export function BalanceChart({ points, bookName }: BalanceChartProps) {
     <div className="rounded-2xl border border-stone-200/80 bg-white/90 p-4 shadow-sm backdrop-blur-sm dark:border-stone-800 dark:bg-stone-900/90 sm:p-5">
       <div className="mb-4">
         <h3 className="font-display text-lg font-semibold text-stone-900 dark:text-stone-50">
-          Evolucion del saldo
+          Evolución del saldo
         </h3>
         <p className="truncate text-sm text-stone-500 dark:text-stone-400">{bookName}</p>
       </div>

@@ -70,7 +70,7 @@ export function EditBookDialog({ open, onClose, book, onSuccess }: EditBookDialo
         <Input label="Autor" value={author} onChange={(e) => setAuthor(e.target.value)} />
         <Input label="ISBN" value={isbn} onChange={(e) => setIsbn(e.target.value)} />
         <Textarea
-          label="Descripcion"
+          label="Descripción"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />

@@ -6,18 +6,18 @@ import { Button } from "@/components/ui/button";
 const steps = [
   {
     number: "01",
-    title: "Inicia sesion",
+    title: "Inicia sesión",
     description: "Accede con tu rol de administrador o usuario del sistema."
   },
   {
     number: "02",
     title: "Gestiona libros",
-    description: "Consulta el catalogo, saldos y responsables de cada maestro."
+    description: "Consulta el catálogo, saldos y responsables de cada maestro."
   },
   {
     number: "03",
     title: "Registra movimientos",
-    description: "Controla entradas, salidas y la evolucion diaria del inventario."
+    description: "Controla entradas, salidas y la evolución diaria del inventario."
   }
 ];
 
@@ -37,7 +37,7 @@ export default function LandingPage() {
             <p className="truncate font-display text-base font-semibold text-stone-900 dark:text-stone-50">
               Biblioteca Central
             </p>
-            <p className="text-xs text-stone-500 dark:text-stone-400">Sistema de gestion</p>
+            <p className="text-xs text-stone-500 dark:text-stone-400">Sistema de gestión</p>
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-2">
@@ -45,7 +45,7 @@ export default function LandingPage() {
           <Link href="/login">
             <Button size="sm" className="sm:h-10 sm:px-4 sm:text-sm">
               <LogIn className="h-4 w-4" />
-              Iniciar sesion
+              Iniciar sesión
             </Button>
           </Link>
         </div>
@@ -62,7 +62,7 @@ export default function LandingPage() {
               Tu biblioteca, organizada con elegancia
             </h1>
             <p className="mt-5 max-w-xl text-base leading-7 text-stone-600 dark:text-stone-300">
-              Controla prestamos, devoluciones y saldos de ejemplares. Administra libros y
+              Controla préstamos, devoluciones y saldos de ejemplares. Administra libros y
               usuarios desde un panel claro, moderno y pensado para cada rol.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -105,7 +105,7 @@ export default function LandingPage() {
 
         <section className="mt-20">
           <h2 className="font-display text-2xl font-semibold text-stone-900 dark:text-stone-50 sm:text-3xl">
-            Como funciona
+            Cómo funciona
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-stone-600 dark:text-stone-400">
             Tres pasos para llevar el inventario de tu biblioteca sin complicaciones.

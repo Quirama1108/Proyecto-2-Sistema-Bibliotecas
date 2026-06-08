@@ -23,10 +23,10 @@ export default function LoginPage() {
             <Library className="h-7 w-7" />
           </div>
           <h1 className="font-display text-2xl font-semibold text-stone-900 dark:text-stone-50">
-            Iniciar sesion
+            Iniciar sesión
           </h1>
           <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">
-            Accede al panel de gestion de biblioteca
+            Accede al panel de gestión de biblioteca
           </p>
         </div>
         <Suspense fallback={<p className="text-center text-sm text-stone-500">Cargando...</p>}>

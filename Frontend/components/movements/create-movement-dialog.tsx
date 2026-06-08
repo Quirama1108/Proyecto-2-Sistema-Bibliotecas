@@ -95,7 +95,7 @@ export function CreateMovementDialog({
     <Dialog
       open={open}
       onClose={onClose}
-      title="Agregar movimiento"
+      title={selectedBook ? `Agregar movimiento - ${selectedBook.name}` : "Agregar movimiento"}
       description="Registra una entrada o salida de inventario para el libro seleccionado."
     >
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -138,8 +138,8 @@ export function CreateMovementDialog({
           value={type}
           onChange={(e) => setType(e.target.value as MovementType)}
         >
-          <option value="ENTRADA">Entrada (devolucion / ingreso)</option>
-          <option value="SALIDA">Salida (prestamo / retiro)</option>
+          <option value="ENTRADA">Entrada (devolución / ingreso)</option>
+          <option value="SALIDA">Salida (préstamo / retiro)</option>
         </Select>
         <Input
           label="Cantidad"
@@ -153,7 +153,7 @@ export function CreateMovementDialog({
           label="Nota (opcional)"
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          placeholder="Ej. Prestamo a usuario"
+          placeholder="Ej. Préstamo a usuario"
         />
         <div className="flex justify-end gap-3 pt-2">
           <Button type="button" variant="secondary" onClick={onClose}>

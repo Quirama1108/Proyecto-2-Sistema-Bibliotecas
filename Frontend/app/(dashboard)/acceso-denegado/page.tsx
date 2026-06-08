@@ -8,7 +8,7 @@ export default function AccesoDenegadoPage() {
         Acceso denegado
       </h1>
       <p className="mt-2 max-w-md text-sm text-stone-500 dark:text-stone-400">
-        No tienes permisos para acceder a esta seccion. Contacta a un administrador si
+        No tienes permisos para acceder a esta sección. Contacta a un administrador si
         necesitas acceso.
       </p>
       <Link href="/transacciones" className="mt-6">

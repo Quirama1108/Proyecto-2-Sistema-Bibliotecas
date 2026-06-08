@@ -27,7 +27,7 @@ export function LoginForm() {
       }
     } catch (err) {
       const message =
-        err instanceof ApiClientError ? err.message : "No se pudo iniciar sesion";
+        err instanceof ApiClientError ? err.message : "No se pudo iniciar sesión";
       setError(message);
     } finally {
       setIsLoading(false);
@@ -37,7 +37,7 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <Input
-        label="Correo electronico"
+        label="Correo electrónico"
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -46,7 +46,7 @@ export function LoginForm() {
         autoComplete="email"
       />
       <Input
-        label="Contrasena"
+        label="Contraseña"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
@@ -60,7 +60,7 @@ export function LoginForm() {
         </p>
       ) : null}
       <Button type="submit" className="w-full" isLoading={isLoading}>
-        Iniciar sesion
+        Iniciar sesión
       </Button>
     </form>
   );

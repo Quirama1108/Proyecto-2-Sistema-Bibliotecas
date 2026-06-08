@@ -54,13 +54,18 @@ export function CreateBookDialog({ open, onClose, onSuccess }: CreateBookDialogP
   }
 
   return (
-    <Dialog open={open} onClose={onClose} title="Agregar maestro" description="Registrar un nuevo libro en el inventario.">
+    <Dialog
+      open={open}
+      onClose={onClose}
+      title="Agregar libro"
+      description="Registra un nuevo libro maestro en el inventario."
+    >
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input label="Nombre" value={name} onChange={(e) => setName(e.target.value)} required />
         <Input label="Autor" value={author} onChange={(e) => setAuthor(e.target.value)} />
         <Input label="ISBN" value={isbn} onChange={(e) => setIsbn(e.target.value)} />
         <Textarea
-          label="Descripcion"
+          label="Descripción"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -77,7 +82,7 @@ export function CreateBookDialog({ open, onClose, onSuccess }: CreateBookDialogP
             Cancelar
           </Button>
           <Button type="submit" isLoading={isLoading}>
-            Crear maestro
+            Crear libro
           </Button>
         </div>
       </form>

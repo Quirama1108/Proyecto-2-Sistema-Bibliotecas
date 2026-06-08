@@ -6,7 +6,7 @@ const configuredUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
 
 if (process.env.NODE_ENV === "production" && !configuredUrl) {
   console.warn(
-    "[config] NEXT_PUBLIC_API_URL no esta definida. En Vercel, agregala en Settings > Environment Variables del proyecto Frontend."
+    "[config] NEXT_PUBLIC_API_URL no está definida. En Vercel, agrégala en Settings > Environment Variables del proyecto Frontend."
   );
 }
 

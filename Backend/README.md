@@ -1,6 +1,6 @@
 # Sistema Biblioteca Backend
 
-Backend REST para el proyecto evaluativo de Ingenieria Web. Implementa autenticacion con JWT, roles `ADMIN` y `USER`, maestros de biblioteca y movimientos de inventario.
+Backend REST para el proyecto evaluativo de Ingeniería Web. Implementa autenticación con JWT, roles `ADMIN` y `USER`, maestros de biblioteca y movimientos de inventario.
 
 ## Requisitos
 
@@ -8,31 +8,31 @@ Backend REST para el proyecto evaluativo de Ingenieria Web. Implementa autentica
 - PostgreSQL en Supabase
 - Una variable `DATABASE_URL` con el transaction pooler de Supabase
 - Una variable `DIRECT_URL` con el session pooler de Supabase para migraciones
-- Una variable `JWT_SECRET` de minimo 24 caracteres
+- Una variable `JWT_SECRET` de mínimo 24 caracteres
 
-## Instalacion
+## Instalación
 
 ```bash
-yarn install
+npm install
 cp .env.example .env
-yarn prisma:generate
-yarn prisma:migrate
-yarn db:seed
-yarn dev
+npm run prisma:generate
+npm run prisma:migrate
+npm run db:seed
+npm run dev
 ```
 
 El backend queda disponible en `http://localhost:3000`.
 
 ## Usuarios de prueba
 
-| Rol | Correo | Password |
+| Rol | Correo | Contraseña |
 | --- | --- | --- |
 | ADMIN | `admin@biblioteca.test` | `Admin12345` |
 | USER | `usuario@biblioteca.test` | `User12345` |
 
 ## Endpoints principales
 
-- `POST /api/auth/login`: inicia sesion y retorna `{ token, user }`.
+- `POST /api/auth/login`: inicia sesión y retorna `{ token, user }`.
 - `POST /api/auth/register`: crea un usuario `USER`.
 - `GET /api/auth/me`: retorna el usuario autenticado.
 - `GET /api/books`: lista maestros/libros. Requiere JWT.
@@ -42,17 +42,17 @@ El backend queda disponible en `http://localhost:3000`.
 - `DELETE /api/books/:id`: desactiva maestro/libro. Solo `ADMIN`.
 - `GET /api/movements?bookId=ID`: lista movimientos de un libro. Requiere JWT.
 - `POST /api/movements`: crea movimiento `ENTRADA` o `SALIDA`. Requiere JWT.
-- `GET /api/movements/summary?bookId=ID`: puntos diarios para grafica. Requiere JWT.
+- `GET /api/movements/summary?bookId=ID`: puntos diarios para gráfica. Requiere JWT.
 - `GET /api/users`: lista usuarios. Solo `ADMIN`.
 - `PATCH /api/users/:id`: cambia rol o estado de usuario. Solo `ADMIN`.
 
-Todas las rutas protegidas reciben el token asi:
+Todas las rutas protegidas reciben el token así:
 
 ```http
 Authorization: Bearer TOKEN
 ```
 
-## Paginacion
+## Paginación
 
 Las rutas de listas aceptan `page` y `pageSize`:
 

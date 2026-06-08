@@ -42,14 +42,14 @@ export function ListControls({
         {onPageSizeChange && pageSize ? (
           <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-end lg:w-auto">
             <Select
-              label="Registros por pagina"
+              label="Registros por página"
               value={String(pageSize)}
               onChange={(e) => onPageSizeChange(Number(e.target.value))}
               className="sm:min-w-40"
             >
               {PAGE_SIZE_OPTIONS.map((size) => (
                 <option key={size} value={size}>
-                  {size} por pagina
+                  {size} por página
                 </option>
               ))}
             </Select>

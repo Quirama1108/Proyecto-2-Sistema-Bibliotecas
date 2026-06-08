@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "Sistema Biblioteca API",
-  description: "Backend REST para el sistema de gestion de biblioteca"
+  description: "Backend REST para el sistema de gestión de biblioteca"
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

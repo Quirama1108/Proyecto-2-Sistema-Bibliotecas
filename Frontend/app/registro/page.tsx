@@ -24,14 +24,14 @@ export default function RegisterPage() {
             Crear cuenta
           </h1>
           <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">
-            Registrate como usuario del sistema de biblioteca
+            Regístrate como usuario del sistema de biblioteca
           </p>
         </div>
         <RegisterForm />
         <p className="mt-6 text-center text-sm text-stone-500 dark:text-stone-400">
           ¿Ya tienes cuenta?{" "}
           <Link href="/login" className="font-medium text-amber-700 hover:underline dark:text-amber-400">
-            Iniciar sesion
+            Iniciar sesión
           </Link>
         </p>
       </div>

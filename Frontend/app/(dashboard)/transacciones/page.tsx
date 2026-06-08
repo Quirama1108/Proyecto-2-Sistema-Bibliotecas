@@ -18,7 +18,7 @@ import { StatCardsSkeleton, TableSkeleton } from "@/components/ui/skeleton";
 import { ApiClientError, getBooks, getMovementSummary, getMovements } from "@/lib/api";
 import { DEFAULT_PAGE_SIZE, SORT_LABELS } from "@/lib/constants";
 import { useDebouncedValue } from "@/lib/use-debounced-value";
-import type { Book, BalancePoint, Movement, Pagination as PaginationMeta } from "@/lib/types";
+import type { BalancePoint, Book, Movement, Pagination as PaginationMeta } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 
 export default function TransaccionesPage() {
@@ -112,8 +112,8 @@ export default function TransaccionesPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Transacciones"
-        description="Consulta y registra movimientos de inventario por libro."
+        title="Transacciones de inventario"
+        description="Selecciona un libro, registra entradas o salidas y revisa cómo cambia su saldo."
         action={
           <Button onClick={() => setDialogOpen(true)} disabled={activeBooks.length === 0}>
             <Plus className="h-4 w-4" />
@@ -122,15 +122,36 @@ export default function TransaccionesPage() {
         }
       />
 
+      <div className="grid gap-3 md:grid-cols-3">
+        <StepCard
+          icon={BookOpen}
+          title="1. Elige un libro"
+          description="Busca por nombre, autor o ISBN y selecciona el libro que quieres revisar."
+          tone="sky"
+        />
+        <StepCard
+          icon={Plus}
+          title="2. Registra el movimiento"
+          description="Usa entrada para ingresos o devoluciones, y salida para préstamos o retiros."
+          tone="amber"
+        />
+        <StepCard
+          icon={ArrowLeftRight}
+          title="3. Revisa historial y gráfica"
+          description="La tabla muestra quién hizo cada movimiento y la gráfica resume el saldo diario."
+          tone="emerald"
+        />
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
-          label="Libros en catalogo"
+          label="Libros en catálogo"
           value={booksPagination?.total ?? 0}
           icon={BookOpen}
           tone="sky"
         />
         <StatCard
-          label="Saldo del libro"
+          label="Saldo actual"
           value={selectedBook?.stock ?? "—"}
           icon={Layers}
           tone="amber"
@@ -144,6 +165,14 @@ export default function TransaccionesPage() {
       </div>
 
       <Panel className="space-y-4 p-4 sm:p-5">
+        <div>
+          <h2 className="font-display text-lg font-semibold text-stone-900 dark:text-stone-50">
+            Libro seleccionado
+          </h2>
+          <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">
+            El historial, el botón de movimiento y la gráfica se actualizan con este libro.
+          </p>
+        </div>
         <ListControls
           search={booksSearch}
           onSearchChange={setBooksSearch}
@@ -154,7 +183,7 @@ export default function TransaccionesPage() {
           total={booksPagination?.total}
         />
         <Select
-          label="Libro a consultar"
+          label="Selecciona el libro"
           value={selectedBookId}
           onChange={(e) => setSelectedBookId(e.target.value)}
           disabled={isLoadingBooks}
@@ -169,6 +198,34 @@ export default function TransaccionesPage() {
             ))
           )}
         </Select>
+        {selectedBook ? (
+          <div className="grid gap-3 rounded-xl border border-stone-200 bg-stone-50 p-4 text-sm dark:border-stone-800 dark:bg-stone-900/70 sm:grid-cols-3">
+            <div>
+              <p className="text-xs uppercase tracking-wide text-stone-500 dark:text-stone-400">
+                Libro
+              </p>
+              <p className="mt-1 font-medium text-stone-900 dark:text-stone-100">
+                {selectedBook.name}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-wide text-stone-500 dark:text-stone-400">
+                Autor
+              </p>
+              <p className="mt-1 text-stone-700 dark:text-stone-300">
+                {selectedBook.author || "Sin autor"}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-wide text-stone-500 dark:text-stone-400">
+                Saldo disponible
+              </p>
+              <p className="mt-1 font-semibold text-stone-900 dark:text-stone-100">
+                {selectedBook.stock} ejemplares
+              </p>
+            </div>
+          </div>
+        ) : null}
         {booksPagination ? (
           <Pagination pagination={booksPagination} onPageChange={setBooksPage} />
         ) : null}
@@ -182,12 +239,20 @@ export default function TransaccionesPage() {
 
       <Panel>
         <div className="border-b border-stone-200 p-4 dark:border-stone-800 sm:px-5 sm:pt-5">
+          <div className="mb-4">
+            <h2 className="font-display text-lg font-semibold text-stone-900 dark:text-stone-50">
+              Historial de movimientos
+            </h2>
+            <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">
+              Cada fila indica la fecha, el tipo de movimiento, la cantidad y el responsable.
+            </p>
+          </div>
           <ListControls
             pageSize={movementsPageSize}
             onPageSizeChange={setMovementsPageSize}
             sortLabel={SORT_LABELS.movements}
             total={movementsPagination?.total}
-            searchHint="Los movimientos se ordenan por fecha desde el servidor. La busqueda de movimientos no esta disponible en la API."
+            searchHint="Los movimientos se ordenan por fecha desde el servidor. La búsqueda de movimientos no está disponible en la API."
           />
         </div>
 
@@ -209,7 +274,7 @@ export default function TransaccionesPage() {
                   <MobileCardField label="Tipo" value={<MovementTypeBadge type={movement.type} />} />
                   <MobileCardField label="Fecha" value={formatDate(movement.createdAt)} />
                   <MobileCardField label="Cantidad" value={movement.quantity} />
-                  <MobileCardField label="Saldo" value={movement.resultingStock} />
+                  <MobileCardField label="Saldo después" value={movement.resultingStock} />
                   <MobileCardField label="Responsable" value={movement.responsible.name} />
                 </MobileCard>
               ))}
@@ -219,11 +284,11 @@ export default function TransaccionesPage() {
               <table className="min-w-full text-left text-sm">
                 <thead>
                   <tr className="border-b border-stone-200 text-stone-500 dark:border-stone-800 dark:text-stone-400">
-                    <th className="px-3 py-3 font-medium">ID</th>
+                    <th className="px-3 py-3 font-medium">Movimiento</th>
                     <th className="px-3 py-3 font-medium">Fecha</th>
                     <th className="px-3 py-3 font-medium">Tipo</th>
                     <th className="px-3 py-3 font-medium">Cantidad</th>
-                    <th className="px-3 py-3 font-medium">Saldo resultante</th>
+                    <th className="px-3 py-3 font-medium">Saldo después</th>
                     <th className="px-3 py-3 font-medium">Responsable</th>
                   </tr>
                 </thead>
@@ -263,9 +328,7 @@ export default function TransaccionesPage() {
         )}
       </Panel>
 
-      {selectedBook ? (
-        <BalanceChart points={points} bookName={selectedBook.name} />
-      ) : null}
+      {selectedBook ? <BalanceChart points={points} bookName={selectedBook.name} /> : null}
 
       <CreateMovementDialog
         open={dialogOpen}
@@ -285,9 +348,43 @@ export default function TransaccionesPage() {
 
       {selectedBook && !selectedBook.enabled ? (
         <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-200">
-          El libro seleccionado esta inactivo. No se pueden registrar nuevos movimientos.
+          El libro seleccionado está inactivo. No se pueden registrar nuevos movimientos.
         </p>
       ) : null}
     </div>
+  );
+}
+
+function StepCard({
+  icon: Icon,
+  title,
+  description,
+  tone
+}: {
+  icon: typeof BookOpen;
+  title: string;
+  description: string;
+  tone: "sky" | "amber" | "emerald";
+}) {
+  const tones = {
+    sky: "bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300",
+    amber: "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300",
+    emerald: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"
+  };
+
+  return (
+    <Panel className="p-4">
+      <div className="flex items-start gap-3">
+        <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${tones[tone]}`}>
+          <Icon className="h-4 w-4" />
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-stone-900 dark:text-stone-100">{title}</p>
+          <p className="mt-1 text-xs leading-5 text-stone-500 dark:text-stone-400">
+            {description}
+          </p>
+        </div>
+      </div>
+    </Panel>
   );
 }

@@ -73,7 +73,7 @@ export default function UsuariosPage() {
               onPageSizeChange={setPageSize}
               sortLabel={SORT_LABELS.users}
               total={pagination?.total}
-              searchHint="La API no incluye busqueda de usuarios. Los resultados se ordenan por fecha de creacion."
+              searchHint="La API no incluye búsqueda de usuarios. Los resultados se ordenan por fecha de creación."
             />
           </div>
           {isLoading ? (
@@ -132,7 +132,7 @@ export default function UsuariosPage() {
                   <thead>
                     <tr className="border-b border-stone-200 text-stone-500 dark:border-stone-800 dark:text-stone-400">
                       <th className="px-3 py-3 font-medium">ID</th>
-                      <th className="px-3 py-3 font-medium">Fecha de creacion</th>
+                      <th className="px-3 py-3 font-medium">Fecha de creación</th>
                       <th className="px-3 py-3 font-medium">Correo</th>
                       <th className="px-3 py-3 font-medium">Nombre</th>
                       <th className="px-3 py-3 font-medium">Rol</th>

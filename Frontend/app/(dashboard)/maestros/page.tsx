@@ -84,13 +84,13 @@ export default function MaestrosPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Maestros"
-        description="Consulta el catalogo de libros y sus saldos disponibles."
+        title="Maestros / Libros"
+        description="Consulta el catálogo de libros, sus saldos disponibles y el usuario que los creó."
         action={
           isAdmin ? (
             <Button onClick={() => setCreateDialogOpen(true)}>
               <Plus className="h-4 w-4" />
-              Agregar
+              Agregar libro
             </Button>
           ) : null
         }
@@ -124,7 +124,7 @@ export default function MaestrosPage() {
               title={debouncedSearch ? "Sin resultados" : "No hay maestros registrados"}
               description={
                 debouncedSearch
-                  ? "Prueba con otro termino de busqueda."
+                  ? "Prueba con otro término de búsqueda."
                   : "Los administradores pueden agregar el primer libro."
               }
               action={
@@ -270,7 +270,7 @@ export default function MaestrosPage() {
         onClose={() => setDeleteTarget(null)}
         onConfirm={handleDelete}
         title="Eliminar libro"
-        description={`¿Seguro que deseas eliminar "${deleteTarget?.name}"? Esta accion no se puede deshacer.`}
+        description={`¿Seguro que deseas eliminar "${deleteTarget?.name}"? Esta acción no se puede deshacer.`}
         confirmLabel="Eliminar"
         variant="danger"
         isLoading={isDeleting}
