@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
 function normalizeOrigin(value?: string | null) {
-  return value?.trim().replace(/^['"]|['"]$/g, "").replace(/\/$/, "");
+  const origin = value?.trim().replace(/^['"]|['"]$/g, "").replace(/\/$/, "");
+
+  if (!origin || origin === "*" || /^https?:\/\//i.test(origin)) {
+    return origin;
+  }
+
+  return `https://${origin}`;
 }
 
 const allowedOrigins = (process.env.FRONTEND_URL || "*")
