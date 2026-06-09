@@ -2,10 +2,10 @@
 
 Proyecto evaluativo de Ingeniería Web para administrar libros, movimientos de inventario y usuarios con roles diferenciados.
 
-## Integrantes
+## Responsables
 
-- Castaneda
-- Losada
+- Santiago Alexander Losada Muñoz
+- Sebastian Castañeda Quirama
 
 ## Alcance
 
